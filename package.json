@@ -1,0 +1,17 @@
+{
+    "name": "web-scraping",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.5",
+        "request": "^2.88.2",
+        "request-promise": "^4.2.6"
+    }
+}
