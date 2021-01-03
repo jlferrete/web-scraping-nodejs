@@ -34,7 +34,22 @@ let resultObject = [];
             `Pagination ARRAY has ${paginationArray.length} LINKS to scrape`
         );
 
-        console.log(paginationArray);
+        for (let url of paginationArray) {
+            response = await requestPromise(url);
+            $ = await cheerio.load(response);
+            $('div[class="card-body"] > a').each(function() {
+                empresasArray.push($(this).attr('href'))
+            });
+
+            console.log(empresasArray);
+            //break;
+
+        }
+
+
+
+
+
 
 
         //seleccionar el último link de la paginación
