@@ -15,8 +15,8 @@ let resultObject = [];
         //get request para traernos el html
         let response = await requestPromise('https://chileservicios.com/industrias/tecnologias-de-la-informacion/');
         let $ = cheerio.load(response);
-        const title = $("title").text();
-        console.log(title);
+        const pageNumber = parseInt($('ul.pagination > li').last().prev().find('a').text());
+        console.log(pageNumber);
         //seleccionar el último link de la paginación
 
 
