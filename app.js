@@ -1,6 +1,8 @@
 const request = require("request");
 const requestPromise = require("request-promise");
 const cheerio = require("cheerio");
+const fs = require('fs');
+const { Parser } = require('json2csv');
 
 //Arrays
 
@@ -41,7 +43,7 @@ let resultObject = [];
             $('div[class="card-body"] > a').each(function() {
                 empresasArray.push($(this).attr('href'))
             });
-            break;
+            //break;
         }
 
         console.log(
@@ -69,18 +71,32 @@ let resultObject = [];
                 .text()
                 .trim();
 
-            break;
+            resultObject.push({
+                titulo: title,
+                telefono: phone,
+                correo: email,
+                pagina: webpage,
+                descripcion: description
+            });
+
+            let data = JSON.stringify(resultObject);
+            fs.writeFileSync('resultObject.json', data);
+            console.log(`${title} scraped OK`);
+
         }
 
-
-
-
-
-
-
-
-
-
+        //Transformar data a CSV
+        //Declaramos los campos
+        const fields = ["titulo", "telefono", "correo", "pagina", "descripcion"];
+        //Nueva instancia del Parser de json2csv
+        const json2csvParser = new Parser({
+            fields: fields,
+            defaultValue: "No info",
+        });
+        //Transformacion
+        const csv = json2csvParser.parse(resultObject);
+        fs.writeFileSync(`./results.csv`, csv, "utf-8");
+        console.log("DONE json2csv");
 
     } catch (error) {
         console.error(error);
